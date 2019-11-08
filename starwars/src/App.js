@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './App.css';
+import CardContainer from './components/CardContainer'
 
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
@@ -14,18 +15,24 @@ const App = () => {
   useEffect(()=>{
     axios.get(' https://swapi.co/api/people')
     .then(response=>{
-      console.log(response.data.results);
+      
+      setStars(response.data.results);
     })
     .catch(error=>{
       console.log(error);
     })
   
 
-  })
-
+  }, [])
+  if (!stars) return <h3>Loading...</h3>;
   return (
     <div className="App">
       <h1 className="Header">React Wars</h1>
+      <CardContainer
+        stars = {stars}
+        setStars = {setStars}
+      
+      />
     </div>
   );
 }
